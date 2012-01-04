@@ -1,0 +1,23 @@
+<package>
+  <description brief="face_recognition">
+A ROS package for face recognition in video stream.
+Face recognition is performed using Eigenfaces (also called "Principal Component Analysis" or PCA) by utilizing the c++ source code provided by Shervin Emami (http://www.shervinemami.info/faceRecognition.html)
+  </description>
+  <author>Pouyan Ziafati</author>
+  <email>pouyan.ziafati@uni.lu</email>
+  <license>Attribution-NonCommercial 3.0</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/face_recognition</url>
+  <depend package="actionlib"/>
+  <depend package="roscpp"/>
+  <depend package="rospy"/>
+  <depend package="roslib"/>
+  <depend package="std_msgs"/>
+  <depend package="actionlib_msgs"/>
+  <depend package="opencv2"/>
+  <depend package="cv_bridge"/>
+  <depend package="image_transport"/>
+
+</package>
+
+
