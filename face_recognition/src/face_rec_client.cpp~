@@ -22,7 +22,6 @@ void doneCb(const actionlib::SimpleClientGoalState& state,
             const face_recognition::FaceRecognitionResultConstPtr& result)
 {
   ROS_INFO("Goal [%i] Finished in state [%s]", result->order_id,state.toString().c_str());
-  if(state.toString() != "SUCCEEDED") return;
   if( result->order_id==0)
     ROS_INFO("%s was recognized with confidence %f", result->names[0].c_str(),result->confidence[0]);          
   if( result->order_id==2)

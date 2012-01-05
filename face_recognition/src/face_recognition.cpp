@@ -85,7 +85,6 @@ public:
   void executeCB(const face_recognition::FaceRecognitionGoalConstPtr &goal)
   {
     //check to be sure if the goal should be still persuaded
-    ROS_INFO("hello %d", goal->order_id);
     if( as_.isPreemptRequested() || ros::isShuttingDown() )
     {
       as_.setPreempted(); 
