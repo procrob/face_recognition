@@ -16,23 +16,23 @@ source ~/catkin_ws/devel/setup.bash
 ### FaceRecognitionGoal 
 This message includes 2 fields: 
 
->* _int_ **order\_id**
->* _string_ **order_argument**
+* _int_ **order\_id**
+* _string_ **order_argument**
 
 ### The face recognition actionlib server accepts 4 different goals:
->* **order\_id** = **0**
+* **order\_id** = **0**
     * **(Recognize Once)** Goal is to acknowledge the first face recognized in the video stream. When the first face is recognized with a confidence value higher than the desirable confidence threshold, the name of the person and the confidence value are sent back to the client as result.
 
->* **order\_id** = **1**
+* **order\_id** = **1**
     * **(Recognize Continuously)** Goal is to continuously recognize faces in the video stream. Every face recognized with confidence value higher than the desirable confidence threshold and its confidence value are sent back to the client as feedback. This goal is persuaded for infinite time until it is canceled or preempted by another goal.
 
->* **order\_id** = **2** **and** **order\_argument** = **person\_name**
+* **order\_id** = **2** **and** **order\_argument** = **person\_name**
     * **(Add face images)** Goal is to acquire training images for a NEW person. The video stream is processed for detecting a face which is saved and used as a training image  for the new person. This process is continued until the desired number of training images for the new person is acquired. The name of the new person is provided as "order\_argument"
 
->* **order\_id = 3**
+* **order\_id = 3**
     * **(Train)** The database is (re)trained from the training images
 
->* **order\_id = 4**
+* **order\_id = 4**
     * **(Exit)** The program exits.
 
 ### Subscribed Topic:
@@ -40,13 +40,13 @@ This message includes 2 fields:
 
 ## Parameters:
 
->* **confidence\_value** (_double_, default = 0.88) 
+* **confidence\_value** (_double_, default = 0.88) 
     * a face recognized with confidence value higher than the **confidence\_value** threshold is accepted as valid.
     
->* **show\_screen\_flag** (_boolean_, default = true)
+* **show\_screen\_flag** (_boolean_, default = true)
     * if output screen is shown
 
->* **add\_face\_number** (int, default = 25)
+* **add\_face\_number** (int, default = 25)
     * a parameter for the **add\_face\_images** goal which determines the number of training images for a new person to be acquired from the video stream 
 
 ## How The Face Recognition Works:
@@ -71,10 +71,10 @@ The client subscribes to **face\_recognition/FRClientGoal** messages. Each FRCli
         * For example you can use **usb_cam** to publish images from your web cam as follows:
         * Install [usb_cam](http://wiki.ros.org/usb_cam) package
         * Run `rosrun usb_cam usb_cam_node usb_cam_node/image_raw:=camera/image_raw _image_height:=<usb_cam_height> _image_width:=<usb_cam_width>`
-    * In separate terminals run the face recognition server and client as follows:
+* In separate terminals run the face recognition server and client as follows:
         * `rosrun face_recognition Fserver`
         * `rosrun face_recognition Fclient`
-    * In another terminal publish messages on topic **/fr\_order** to test different face recognition functionalities as follows: (notice the info which are printed on the client terminal after each command) 
+* In another terminal publish messages on topic **/fr\_order** to test different face recognition functionalities as follows: (notice the info which are printed on the client terminal after each command) 
     * `rostopic pub -1 /fr_order face_recognition/FRClientGoal -- 2 "your_name"`
         * to acquire training images for your face: you should try to appear in the video stream!
     * `rostopic pub -1 /fr\_order face\_recognition/FRClientGoal -- 3 "none"`
