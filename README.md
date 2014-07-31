@@ -5,7 +5,7 @@ The **face\_recognition** ROS package provides an simple actionlib server interf
 
 ## Instalation
 This instalation process is for **catkin** (ROS Groovy or newer version)
-Assuming that your catkin workspace is under **~/catkin_ws**, if not replace **~/catkin_ws** with appropriate location.
+Assuming that your catkin workspace is under **~/catkin_ws**, if not replace **~/catkin_ws** with appropriate location. It also assumes you're running Bash shell, if you're running Zsh, source appropriate **setup.zsh** file.
 ```
 cd ~/catkin_ws/src
 git clone https://github.com/procrob/procrob_functional.git --branch catkin
