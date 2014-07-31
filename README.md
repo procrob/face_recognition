@@ -78,15 +78,15 @@ The client subscribes to **face\_recognition/FRClientGoal** messages. Each FRCli
 * In another terminal publish messages on topic **/fr\_order** to test different face recognition functionalities as follows: (notice the info which are printed on the client terminal after each command) 
     * `rostopic pub -1 /fr_order face_recognition/FRClientGoal -- 2 "your_name"`
         * to acquire training images for your face: you should try to appear in the video stream!
-    * `rostopic pub -1 /fr\_order face\_recognition/FRClientGoal -- 3 "none"`
+    * `rostopic pub -1 /fr_order face_recognition/FRClientGoal -- 3 "none"`
         * to retrain and update the database, so that you can be recognized 
-    * `rostopic pub -1 /fr\_order face\_recognition/FRClientGoal -- 1 "none"`
+    * `rostopic pub -1 /fr_order face_recognition/FRClientGoal -- 1 "none"`
         * to recognize faces continuously. This would not stop until you preempt or cancel the goal. So lets preempt it by sending the next goal.
-    * `rostopic pub -1 /fr\_order face\_recognition/FRClientGoal -- 2 "your\_friend's\_name"`   
+    * `rostopic pub -1 /fr_order face_recognition/FRClientGoal -- 2 "your\_friend's\_name"`   
         * add training images for a new person
-    * `rostopic pub -1 /fr\_order face\_recognition/FRClientGoal -- 0 "none"`
+    * `rostopic pub -1 /fr_order face_recognition/FRClientGoal -- 0 "none"`
         * recognize once
-    * `rostopic pub -1 /fr\_order face\_recognition/FRClientGoal -- 1 "none"`
+    * `rostopic pub -1 /fr_order face_recognition/FRClientGoal -- 1 "none"`
         * recognize continuous
-    * `rostopic pub -1 /fr\_order face\_recognition/FRClientGoal -- 4 "none"`           
+    * `rostopic pub -1 /fr_order face_recognition/FRClientGoal -- 4 "none"`           
         * exit
