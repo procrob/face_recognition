@@ -72,8 +72,8 @@ The client subscribes to **face\_recognition/FRClientGoal** messages. Each FRCli
         * Install [usb_cam](http://wiki.ros.org/usb_cam) package
         * Run `rosrun usb_cam usb_cam_node usb_cam_node/image_raw:=camera/image_raw _image_height:=<usb_cam_height> _image_width:=<usb_cam_width>`
 * In separate terminals run the face recognition server and client as follows:
-        * `rosrun face_recognition Fserver`
-        * `rosrun face_recognition Fclient`
+    * `rosrun face_recognition Fserver`
+    * `rosrun face_recognition Fclient`
 * In another terminal publish messages on topic **/fr\_order** to test different face recognition functionalities as follows: (notice the info which are printed on the client terminal after each command) 
     * `rostopic pub -1 /fr_order face_recognition/FRClientGoal -- 2 "your_name"`
         * to acquire training images for your face: you should try to appear in the video stream!
