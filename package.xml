@@ -9,8 +9,6 @@ Face recognition is performed using Eigenfaces (also called "Principal Component
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
   <maintainer email="pouyan.ziafati@uni.lu">Pouyan Ziafati (Author)</maintainer>
-  <maintainer email="davidbsp@citard-serv.com">David Portugal (Catkinization)</maintainer>
-  <maintainer email="maciej.zurad@gmail.com">Maciej Zurad (Catkinization fixes, bug fixes)</maintainer>
 
   <!-- One license tag required, multiple allowed, one license per tag -->
   <!-- Commonly used license strings: -->

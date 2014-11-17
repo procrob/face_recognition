@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(face_recognition)
 
+# We thank David Portugal [<davidbsp@citard-serv.com>](mailto://avidbsp@citard-serv.com) for providing Catkinization 
+# and Maciej Zurad [<maciej.zurad@gmail.com>](mailto://maciej.zurad@gmail.com) for bug fixes.
+
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
