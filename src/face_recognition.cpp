@@ -196,7 +196,7 @@ public:
     //convert from ros image format to opencv image format
     try
     {
-      cv_ptr = cv_bridge::toCvCopy(msg);
+      cv_ptr = cv_bridge::toCvCopy(msg, "bgr8");
     }
     catch (cv_bridge::Exception& e)
     {
