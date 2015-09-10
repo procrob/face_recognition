@@ -50,23 +50,30 @@ public:
   FaceRecognition(std::string name) : 
     frl(),
     it_(nh_),
+    pnh_("~"),
     as_(nh_, name, boost::bind(&FaceRecognition::executeCB, this, _1), false)
   {
-    cvNamedWindow("Input", CV_WINDOW_AUTOSIZE); 	// output screen
-    cvInitFont(&font,CV_FONT_HERSHEY_PLAIN, 1.0, 4.0, 2,2,CV_AA);  
-    textColor = CV_RGB(0,255,255);	// light blue text
-    goal_id_ = -99; 
     //a face recognized with confidence value higher than the confidence_value threshold is accepted as valid.
-    confidence_value = 0.88;
+    pnh_.param<double>("confidence_value", confidence_value, 0.88);
     //if output screen is shown
-    show_screen_flag = true;
+    pnh_.param<bool>("show_screen_flag", show_screen_flag, true);
+    ROS_INFO("show_screen_flag: %s", show_screen_flag ? "true" : "false");
     //a parameter for the "add_face_images" goal which determines the number of training images for a new face (person) to be acquired from the video stream 
+    pnh_.param<int>("add_face_number", add_face_number, 25);
     add_face_number = 25;
     //the number of persons in the training file (train.txt)
     person_number=0;
     //starting the actionlib server
     as_.start();
     //if the number of persons in the training file is not equal with the number of persons in the trained database, the database is not updated and user should be notified to retrain the database if new tarining images are to be considered.
+
+    if (show_screen_flag) {
+      cvNamedWindow("Input", CV_WINDOW_AUTOSIZE); 	// output screen
+      cvInitFont(&font,CV_FONT_HERSHEY_PLAIN, 1.0, 4.0, 2,2,CV_AA);  
+      textColor = CV_RGB(0,255,255);	// light blue text
+    }
+    goal_id_ = -99; 
+
     if(calcNumTrainingPerson("train.txt")!=frl.nPersons)
     {
        frl.database_updated=false; 
@@ -222,13 +229,11 @@ public:
     if (faceRect.width < 1) 
     {
       ROS_INFO("No face was detected in the last frame"); 
-      text_image.str(""); 
-      text_image <<"No face was detected. ";
-      cvPutText(img, text_image.str().c_str(), cvPoint(10, faceRect.y + 50), &font, textColor);
       if(show_screen_flag)
       {
-         cvShowImage("Input", img);
-         cvWaitKey(1);
+        cvPutText(img, text_image.str().c_str(), cvPoint(10, faceRect.y + 50), &font, textColor);
+        cvShowImage("Input", img);
+        cvWaitKey(1);
       }
       cvReleaseImage( &greyImg );cvReleaseImage(&img);
       r.sleep(); 
@@ -390,7 +395,7 @@ protected:
   CvFont font;
   CvScalar textColor;
   ostringstream text_image;
-  ros::NodeHandle nh_;
+  ros::NodeHandle nh_, pnh_;
   FaceRecognitionLib frl; 
   image_transport::ImageTransport it_;
   image_transport::Subscriber image_sub_;
