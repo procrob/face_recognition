@@ -86,7 +86,9 @@ public:
 
   ~FaceRecognition(void)
   {
+    if (show_screen_flag) {
      cvDestroyWindow("Input");
+    }
   }
 
 
@@ -199,6 +201,10 @@ public:
        as_.setPreempted();
        mutex_.unlock(); return;
     }  
+
+    //get the value of show_screen_flag from the parameter server
+    ros::param::getCached("~show_screen_flag", show_screen_flag); 
+
     cv_bridge::CvImagePtr cv_ptr;
     //convert from ros image format to opencv image format
     try
@@ -239,7 +245,9 @@ public:
       r.sleep(); 
       mutex_.unlock(); return;
     }
-    cvRectangle(img, cvPoint(faceRect.x, faceRect.y), cvPoint(faceRect.x + faceRect.width-1, faceRect.y + faceRect.height-1), CV_RGB(0,255,0), 1, 8, 0);
+    if (show_screen_flag) {
+      cvRectangle(img, cvPoint(faceRect.x, faceRect.y), cvPoint(faceRect.x + faceRect.width-1, faceRect.y + faceRect.height-1), CV_RGB(0,255,0), 1, 8, 0);
+    }
     faceImg = frl.cropImage(greyImg, faceRect);	// Get the detected face image.
     // Make sure the image is the same dimensions as the training images.
     sizedImg = frl.resizeImage(faceImg, frl.faceWidth, frl.faceHeight);
@@ -256,8 +264,6 @@ public:
            ROS_INFO("Goal %d is preempted",goal_id_);
            mutex_.unlock(); return;
         }
-     //get the value of show_screen_flag from the parameter server
-     ros::param::getCached("~show_screen_flag", show_screen_flag); 
      //goal is add_face_images
      if( goal_id_==2  )      
      {
@@ -286,9 +292,11 @@ public:
              } 
            frl.database_updated = false;
         }
-        text_image.str("");
-        text_image <<"A picture of "<< &goal_argument_[0]<< "was added" <<endl;
-        cvPutText(img, text_image.str().c_str(), cvPoint( 10, 50), &font, textColor);
+        if (show_screen_flag) {
+          text_image.str("");
+          text_image <<"A picture of "<< &goal_argument_[0]<< "was added" <<endl;
+          cvPutText(img, text_image.str().c_str(), cvPoint( 10, 50), &font, textColor);
+        }
         //check if enough number of training images for the person has been acquired, then the goal is succeed.
         if(++add_face_count==add_face_number)	
 	{
@@ -336,17 +344,22 @@ public:
        //get the desired confidence value from the parameter server
        ros::param::getCached("~confidence_value", confidence_value);
        cvFree(&projectedTestFace);
-       text_image.str("");
        if(confidence<confidence_value)
        {
           ROS_INFO("Confidence is less than %f was %f, detected face is not considered.",(float)confidence_value, (float)confidence);
-          text_image << "Confidence is less than "<< confidence_value;
-          cvPutText(img, text_image.str().c_str(), cvPoint(faceRect.x, faceRect.y + faceRect.height + 25), &font, textColor);
+          if (show_screen_flag) {
+            text_image.str("");
+            text_image << "Confidence is less than "<< confidence_value;
+            cvPutText(img, text_image.str().c_str(), cvPoint(faceRect.x, faceRect.y + faceRect.height + 25), &font, textColor);
+          }
        }
        else
        {
-          text_image <<  frl.personNames[nearest-1].c_str()<<" is recognized";
-          cvPutText(img, text_image.str().c_str(), cvPoint(faceRect.x, faceRect.y + faceRect.height + 25), &font, textColor);
+         if (show_screen_flag) {
+           text_image.str("");
+           text_image <<  frl.personNames[nearest-1].c_str()<<" is recognized";
+           cvPutText(img, text_image.str().c_str(), cvPoint(faceRect.x, faceRect.y + faceRect.height + 25), &font, textColor);
+         }
 	  //goal is to recognize_once, therefore set as succeeded.
           if(goal_id_==0)
           {
