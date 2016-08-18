@@ -1,0 +1,39 @@
+<launch>
+	<arg name="show_screen" default="true"/>
+
+	<node
+		name="usb_camera"
+		pkg="usb_cam"
+		type="usb_cam_node"
+		required="true"
+		output="screen">
+		<param name="autofocus" type="boolean" value="true"/>
+	</node>
+
+	<node
+		name="Fserver"
+		pkg="face_recognition"
+		type="Fserver"
+		required="true">
+		<remap
+			from="camera/image_raw"
+			to="usb_camera/image_raw"/>
+		<param 
+			name="show_screen_flag" 
+			type="boolean" 
+			value="$(arg show_screen)"/>
+	</node>
+
+	<node
+		name="Fclient"
+		pkg="face_recognition"
+		type="Fclient"
+		required="true"
+		output="screen">
+		<remap
+			from="face_recognition"
+			to="Fserver"
+			/>
+	</node>
+
+</launch>
