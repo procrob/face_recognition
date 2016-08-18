@@ -48,9 +48,9 @@ class FaceRecognition
 public:
     
   FaceRecognition(std::string name) : 
+    pnh_("~"),
     frl(),
     it_(nh_),
-    pnh_("~"),
     as_(nh_, name, boost::bind(&FaceRecognition::executeCB, this, _1), false)
   {
     //a face recognized with confidence value higher than the confidence_value threshold is accepted as valid.
